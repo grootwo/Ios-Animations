@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var animationAmount = 0.0
+    @State private var dragAmount = CGSize.zero
     var body: some View {
-        VStack {
-            Button("Tap here") {
-                withAnimation(.spring(duration: 1, bounce: 0.6)) {
-                    animationAmount += 360
-                }
-            }
-                .padding(50)
-                .background(.blue)
-                .foregroundColor(.white)
-                .clipShape(.circle)
-                .rotation3DEffect(
-                    .degrees(animationAmount), axis: (x: 1.0, y: 1.0, z: 1.0))
-        }
-        .padding()
+        RadialGradient(colors: [.cyan, .green, .yellow], center: .center, startRadius: 180, endRadius: 0)
+            .frame(width: 350, height: 350)
+            .clipShape(.rect(cornerRadius: 20))
+            .offset(dragAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged { dragAmount = $0.translation }
+                    .onEnded { _ in
+                        withAnimation(.smooth) {
+                            dragAmount = CGSize.zero
+                        }
+                    }
+            )
+//            .animation(.smooth, value: dragAmount)
     }
 }
 
