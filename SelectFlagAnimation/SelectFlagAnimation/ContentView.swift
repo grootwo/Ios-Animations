@@ -39,7 +39,8 @@ struct FlagButton: View {
             .degrees(rotationAnimationAmount), axis: (x: 0.0, y: 1.0, z: 0.0)
         )
         .animation(.bouncy(duration: 0.5, extraBounce: 0.3), value: rotationAnimationAmount)
-        .offset(isSelected ? .zero : CGSize(width: 0.0, height: 10))
+        .offset(isSelected ? .zero : CGSize(width: 0.0, height: 15))
+        .scaleEffect(isSelected ? 1 : 0.7)
         .opacity(isSelected ? 1 : 0.25)
         .animation(.smooth, value: isSelected)
     }
